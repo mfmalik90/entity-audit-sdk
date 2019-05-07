@@ -1,0 +1,13 @@
+/.classpath
+/.externalToolBuilders
+/.project
+/.settings
+target
+*.iml
+.idea/
+catalina.home_IS_UNDEFINED/
+*.versionsBackup
+/out
+ops/bin/vars.properties
+/beanstalk_urls
+*.plan
