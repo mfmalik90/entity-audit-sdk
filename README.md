@@ -5,6 +5,10 @@ The SDK provides the capability for out of the box audit logs for hibernate enti
 SDK works on the **HibernateEventsListeners** namely **PostInsertEvent , PostUpdateEvent and PostDeleteEvent.**
 and since only the JpaRepository/CrudRepository managed methods will publish the event so the audit logs will work only for the default methods exposed by JpaRepository/CrudRepository.
 
+CICD pipeline :https://cicd-pipelines.careem-internal.com/job/generated-pipelines/job/captain-payments/job/entity-audit-sdk/
+
+Bitbucket Repo: ssh://git@sshbitbucketdc.careem-internal.com:7999/sdk/entity-audit-sdk.git 
+
 Example Pull Request :https://bitbucketdc.careem-internal.com/projects/CPAY/repos/payout-info-service/pull-requests/60/overview
 
 > Steps to add and configure the SDK
