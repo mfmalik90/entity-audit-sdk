@@ -27,6 +27,35 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <dependencies>
+                <!-- Generate @Data classes with setters/getters and more. -->
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.16.14</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>not-deploy</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <!-- Generate @Data classes with setters/getters and more. -->
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.16.14</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
 
         <dependency>
@@ -100,5 +129,19 @@
         </dependency>
 
     </dependencies>
+
+
+    <distributionManagement>
+        <repository>
+            <id>careem-releases</id>
+            <name>libs-release-local</name>
+            <url>http://artifactory.careem-internal.com/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>careem-snapshots</id>
+            <name>libs-snapshot-local</name>
+            <url>http://artifactory.careem-internal.com/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
