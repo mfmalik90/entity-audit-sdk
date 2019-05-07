@@ -1,0 +1,17 @@
+team: captain-payments
+email: captain-payments-eng@careem.com
+slack: cpay-builds
+project: maven
+agent: pipeline-generator-agent
+source: bitbucket
+branch: master
+
+stages:
+  - deploy
+
+jobs:
+  - name: deploy
+    stage: deploy
+    profile: qa
+    cmd: make deploy
+    branch: master
