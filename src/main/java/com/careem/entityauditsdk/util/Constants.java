@@ -14,4 +14,7 @@ public final class Constants {
     public static final String X_FORWARDED_FOR = "X-FORWARDED-FOR";
     public static final String PASSWORD = "password";
     public static final String CENSORED =  "**censored**";
+    public static final String TOKEN = "token";
+    public static final String AUTHORIZATION = "authorization";
+
 }

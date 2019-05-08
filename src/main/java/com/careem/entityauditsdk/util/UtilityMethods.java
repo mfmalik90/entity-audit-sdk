@@ -29,6 +29,15 @@ public final class UtilityMethods {
 
     private UtilityMethods(){}
 
+    final static String passwordSearchRegex = "\"password\":\".*?\"";
+    final static String passwordReplaceString = String.format("\"password\":\"%s\"", CENSORED);
+
+    final static String tokenSearchRegex = "\"token.*?\":\".*?\",";
+    final static String tokenReplaceString = String.format("\".*token.*?\":\"%s\",", CENSORED);
+
+    final static String authSearchRegex = "\"uthorization.*?\":\".*?\",";
+    final static String authReplaceString = String.format("\"uthorization.*?\":\"%s\",", CENSORED);
+
     /*
     read the table annotation from the object and then return the name of the table
      */
@@ -149,13 +158,28 @@ public final class UtilityMethods {
     }
 
     public static String censorRequestDto(String request) {
-        final String searchRegex = "\"password\":\".*?\"";
-        final String replaceString = String.format("\"password\":\"%s\"", CENSORED);
-        if (request.contains(PASSWORD)) {
-            Pattern p = Pattern.compile(searchRegex);
-            Matcher m = p.matcher(request);
-            request = m.replaceAll(replaceString);
+        try {
+            if (request.contains(PASSWORD)) {
+                request = Pattern
+                        .compile(passwordSearchRegex)
+                        .matcher(request)
+                        .replaceAll(passwordReplaceString);
+            }
+            if (request.contains(TOKEN)) {
+                request = Pattern
+                        .compile(tokenSearchRegex)
+                        .matcher(request)
+                        .replaceAll(tokenReplaceString);
+            }
+            if (request.contains(AUTHORIZATION)) {
+                request = Pattern
+                        .compile(authSearchRegex)
+                        .matcher(request)
+                        .replaceAll(authReplaceString);
+            }
+            return request;
+        } catch (Exception e) {
+           return request;
         }
-        return request;
     }
 }

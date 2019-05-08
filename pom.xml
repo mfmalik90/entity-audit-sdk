@@ -6,7 +6,7 @@
     <groupId>com.careem</groupId>
     <artifactId>entity-audit-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>19.19.10</version>
+    <version>100.0.0</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
