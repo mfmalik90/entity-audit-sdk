@@ -4,6 +4,7 @@ import com.careem.entityauditsdk.dto.EntityAuditEventData;
 import com.careem.entityauditsdk.dto.RawAuditEventData;
 import com.careem.entityauditsdk.model.AuditLog;
 import com.careem.entityauditsdk.repository.AuditLogRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.careem.entityauditsdk.util.Constants.ID;
+import static com.careem.entityauditsdk.util.UtilityMethods.censorRequestDto;
 import static com.careem.entityauditsdk.util.UtilityMethods.getSourceService;
 import static com.careem.entityauditsdk.util.UtilityMethods.getSourceServiceVersion;
 
@@ -60,10 +62,16 @@ public class EntityAuditLogEventConsumer {
             }
             ObjectNode requestNode = (rawAuditEventData.getRequestDto() == null) ? null :
                     objectMapper.valueToTree(rawAuditEventData.getRequestDto());
-
+            JsonNode censoredRequestNode;
+            if (requestNode != null) {
+                String censoredRequestNodeString = censorRequestDto(requestNode.toString());
+                censoredRequestNode = objectMapper.readTree(censoredRequestNodeString);
+            } else {
+                censoredRequestNode = null;
+            }
             saveAuditLog(rawAuditEventData.getModifiedBy(), rawAuditEventData.getModifiedByType(),
                     rawAuditEventData.getTableName(), rawAuditEventData.getRecordId(),
-                    rawAuditEventData.getAction(), oldStateNode, newStateNode, requestNode);
+                    rawAuditEventData.getAction(), oldStateNode, newStateNode, censoredRequestNode);
         } catch (Exception e) {
             log.warn("Error occurred while processing the rawAuditEventData : {}", rawAuditEventData);
         }
@@ -73,20 +81,31 @@ public class EntityAuditLogEventConsumer {
     @EventListener
     @Transactional(value = "auditLogTransactionManager")
     public void processAuditEvent(EntityAuditEventData entityAuditEventData) {
-        ObjectNode oldStateNode = entityAuditEventData.getOldState() != null
-                ? objectMapper.valueToTree(entityAuditEventData.getOldState()) : null;
-        ObjectNode newStateNode = entityAuditEventData.getNewState() != null
-                ? objectMapper.valueToTree(entityAuditEventData.getNewState()) : null;
-        ObjectNode requestNode = (entityAuditEventData.getRequestDto() == null) ? null :
-                objectMapper.valueToTree(entityAuditEventData.getRequestDto());
-        saveAuditLog(entityAuditEventData.getModifiedBy(), entityAuditEventData.getModifiedByType(),
-                entityAuditEventData.getTableName(), entityAuditEventData.getRecordId(),
-                entityAuditEventData.getAction(), oldStateNode, newStateNode, requestNode);
+        try {
+            ObjectNode oldStateNode = entityAuditEventData.getOldState() != null
+                    ? objectMapper.valueToTree(entityAuditEventData.getOldState()) : null;
+            ObjectNode newStateNode = entityAuditEventData.getNewState() != null
+                    ? objectMapper.valueToTree(entityAuditEventData.getNewState()) : null;
+            ObjectNode requestNode = (entityAuditEventData.getRequestDto() == null) ? null :
+                    objectMapper.valueToTree(entityAuditEventData.getRequestDto());
+            JsonNode censoredRequestNode;
+            if (requestNode != null) {
+                String censoredRequestNodeString = censorRequestDto(requestNode.toString());
+                censoredRequestNode = objectMapper.readTree(censoredRequestNodeString);
+            } else {
+                censoredRequestNode = null;
+            }
+            saveAuditLog(entityAuditEventData.getModifiedBy(), entityAuditEventData.getModifiedByType(),
+                    entityAuditEventData.getTableName(), entityAuditEventData.getRecordId(),
+                    entityAuditEventData.getAction(), oldStateNode, newStateNode, censoredRequestNode);
+        } catch (Exception e) {
+            log.warn("Error occurred while processing the entityAuditEventData : {}", entityAuditEventData);
+        }
     }
 
     private void saveAuditLog(
             String modifiedBy, String modifiedByType, String tableName, Long recordId,
-            String action, ObjectNode oldStateNode, ObjectNode newStateNode, ObjectNode requestNode
+            String action, ObjectNode oldStateNode, ObjectNode newStateNode, JsonNode requestNode
     ) {
         try {
             AuditLog auditLog = AuditLog.builder()

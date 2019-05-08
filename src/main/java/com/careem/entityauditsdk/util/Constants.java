@@ -12,4 +12,6 @@ public final class Constants {
     public static final String ID = "id";
     public static final String POM = "pom.xml";
     public static final String X_FORWARDED_FOR = "X-FORWARDED-FOR";
+    public static final String PASSWORD = "password";
+    public static final String CENSORED =  "**censored**";
 }

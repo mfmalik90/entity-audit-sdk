@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.careem.entityauditsdk.util.Constants.*;
 
@@ -132,7 +134,7 @@ public final class UtilityMethods {
     this method can be used to set the requestUser in the RequestContextHolder in case it doesn't exist
      and we want to persist in the audit log
      */
-    public static void setRequestUser(String requestUser) {
+    public static void setRequestUserId(String requestUser) {
         RequestContextHolder.getRequestAttributes()
                 .setAttribute(USER_ID, requestUser, RequestAttributes.SCOPE_REQUEST);
     }
@@ -146,4 +148,14 @@ public final class UtilityMethods {
                 .setAttribute(USER_TYPE, requestUserType, RequestAttributes.SCOPE_REQUEST);
     }
 
+    public static String censorRequestDto(String request) {
+        final String searchRegex = "\"password\":\".*?\"";
+        final String replaceString = String.format("\"password\":\"%s\"", CENSORED);
+        if (request.contains(PASSWORD)) {
+            Pattern p = Pattern.compile(searchRegex);
+            Matcher m = p.matcher(request);
+            request = m.replaceAll(replaceString);
+        }
+        return request;
+    }
 }

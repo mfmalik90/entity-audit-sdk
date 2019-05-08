@@ -11,6 +11,8 @@ Bitbucket Repo: ssh://git@sshbitbucketdc.careem-internal.com:7999/sdk/entity-aud
 
 Example Pull Request :https://bitbucketdc.careem-internal.com/projects/CPAY/repos/payout-info-service/pull-requests/60/overview
 
+Confluence Wiki: https://confluence.careempartner.com/display/CAPE/Entity+Audit+SDK
+
 > Steps to add and configure the SDK
 1. Add the dependency to the pom
 
