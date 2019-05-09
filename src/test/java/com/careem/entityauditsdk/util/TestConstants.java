@@ -2,14 +2,14 @@ package com.careem.entityauditsdk.util;
 
 /**
  * @author faizanmalik
- * creation date 2019-05-05
+ * creation date 5/9/19
  */
-public final class Constants {
-    private Constants(){}
+public final class TestConstants {
+    private TestConstants(){}
 
-    public static final String USER_ID = "userid";
-    public static final String USER_TYPE = "usertype";
-    public static final String ID = "id";
+    public static final Long TEST_ID = 1l;
+    public static final String TEST_STRING = "test";
+
     public static final String X_FORWARDED_FOR = "X-FORWARDED-FOR";
     public static final String PASSWORD = "password";
     public static final String CENSORED =  "**censored**";

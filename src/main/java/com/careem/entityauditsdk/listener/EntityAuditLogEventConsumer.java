@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static com.careem.entityauditsdk.util.Constants.ID;
 import static com.careem.entityauditsdk.util.UtilityMethods.censorRequestDto;
-import static com.careem.entityauditsdk.util.UtilityMethods.getSourceService;
-import static com.careem.entityauditsdk.util.UtilityMethods.getSourceServiceVersion;
 
 /**
  * @author faizanmalik
@@ -33,6 +32,12 @@ public class EntityAuditLogEventConsumer {
 
     @Autowired
     private AuditLogRepository auditLogRepository;
+
+    @Value("${service.identifier:unidentified}")
+    private String sourceService;
+
+    @Value("${spring.application.version:unidentified}")
+    private String serviceVersion;
 
     @Async
     @EventListener
@@ -116,8 +121,8 @@ public class EntityAuditLogEventConsumer {
                     .action(action)
                     .oldState(oldStateNode)
                     .newState(newStateNode)
-                    .sourceService(getSourceService())
-                    .serviceVersion(getSourceServiceVersion())
+                    .sourceService(sourceService)
+                    .serviceVersion(serviceVersion)
                     .requestMetadata(requestNode)
                     .build();
             log.info("Saving custom audit log with with content : {} on thread #{} with threadId #{}",

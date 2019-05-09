@@ -32,11 +32,11 @@ public final class UtilityMethods {
     final static String passwordSearchRegex = "\"password\":\".*?\"";
     final static String passwordReplaceString = String.format("\"password\":\"%s\"", CENSORED);
 
-    final static String tokenSearchRegex = "\"token.*?\":\".*?\",";
-    final static String tokenReplaceString = String.format("\".*token.*?\":\"%s\",", CENSORED);
+    final static String tokenSearchRegex = "token.*?\":\".*?\",";
+    final static String tokenReplaceString = String.format("token.*?\":\"%s\",", CENSORED);
 
-    final static String authSearchRegex = "\"uthorization.*?\":\".*?\",";
-    final static String authReplaceString = String.format("\"uthorization.*?\":\"%s\",", CENSORED);
+    final static String authSearchRegex = "authorization.*?\":\".*?\",";
+    final static String authReplaceString = String.format("authorization.*?\":\"%s\",", CENSORED);
 
     /*
     read the table annotation from the object and then return the name of the table
@@ -61,26 +61,6 @@ public final class UtilityMethods {
                 List<EntityAuditType> auditTypeArray = Arrays.asList(entityAuditing.auditType());
                 return auditTypeArray.contains(EntityAuditType.ALL) || auditTypeArray.contains(auditType);
             }
-        }
-    }
-
-    public static String getSourceService(){
-        try {
-            return (new MavenXpp3Reader()).read(new FileReader(POM)).getArtifactId();
-        } catch (IOException e) {
-            return null;
-        } catch (XmlPullParserException e) {
-            return null;
-        }
-    }
-
-    public static String getSourceServiceVersion(){
-        try {
-            return (new MavenXpp3Reader()).read(new FileReader(POM)).getVersion();
-        } catch (IOException e) {
-            return null;
-        } catch (XmlPullParserException e) {
-            return null;
         }
     }
 
