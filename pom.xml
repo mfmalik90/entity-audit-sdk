@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.careem</groupId>
+    <groupId>com.hibernatesql</groupId>
     <artifactId>entity-audit-sdk</artifactId>
     <packaging>jar</packaging>
     <version>1.0.1</version>
@@ -132,16 +132,16 @@
 
 
     <distributionManagement>
-        <repository>
-            <id>careem-releases</id>
-            <name>libs-release-local</name>
-            <url>http://artifactory.careem-internal.com/artifactory/libs-release-local</url>
-        </repository>
-        <snapshotRepository>
-            <id>careem-snapshots</id>
-            <name>libs-snapshot-local</name>
-            <url>http://artifactory.careem-internal.com/artifactory/libs-snapshot-local</url>
-        </snapshotRepository>
+        <!--<repository>-->
+            <!--<id>careem-releases</id>-->
+            <!--<name>libs-release-local</name>-->
+            <!--<url>http://artifactory.careem-internal.com/artifactory/libs-release-local</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>careem-snapshots</id>-->
+            <!--<name>libs-snapshot-local</name>-->
+            <!--<url>http://artifactory.careem-internal.com/artifactory/libs-snapshot-local</url>-->
+        <!--</snapshotRepository>-->
     </distributionManagement>
 
 </project>
