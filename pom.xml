@@ -132,16 +132,7 @@
 
 
     <distributionManagement>
-        <!--<repository>-->
-            <!--<id>careem-releases</id>-->
-            <!--<name>libs-release-local</name>-->
-            <!--<url>http://artifactory.careem-internal.com/artifactory/libs-release-local</url>-->
-        <!--</repository>-->
-        <!--<snapshotRepository>-->
-            <!--<id>careem-snapshots</id>-->
-            <!--<name>libs-snapshot-local</name>-->
-            <!--<url>http://artifactory.careem-internal.com/artifactory/libs-snapshot-local</url>-->
-        <!--</snapshotRepository>-->
+
     </distributionManagement>
 
 </project>
