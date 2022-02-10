@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <org.hibernate.version>5.0.12.Final</org.hibernate.version>
+        <org.hibernate.version>5.4.24.Final</org.hibernate.version>
         <togglz.version>2.5.0.Final</togglz.version>
         <java-version>1.8</java-version>
         <!-- Tomcat 8 -->
